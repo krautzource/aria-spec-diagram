@@ -6,10 +6,10 @@ const collapse = (resultArray, parent, child) => {
   child.children.forEach(collapse.bind(null, resultArray, child));
 };
 
-let results = [];
+let results = ['graph TD'];
 
 collapse(results, null, data);
 
-console.log(results.join('\n'));
+console.log(results.sort().join('\n'));
 // pipe output to, e.g.,  https://mermaid-js.github.io/mermaid-live-editor/ (as flow diagram)
 // or (with modification '-->' to '->' ) to https://dagrejs.github.io/project/dagre-d3/latest/demo/interactive-demo.html
