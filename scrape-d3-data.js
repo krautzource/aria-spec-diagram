@@ -9,8 +9,9 @@ const puppeteer = require('puppeteer');
   const tree = await page.evaluate(() => {
     const recurseRoles = (roleSection, parent) => {
       const roleId = roleSection.id;
+      const postfix = roleSection.querySelectorAll('.role-parent li').length > 1 ? ' (*)' : '';
       const roleEntry = {
-        name: roleId,
+        name: `${roleId}${postfix}`,
         children: [],
       };
       if (parent) {
