@@ -1,144 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARIA Spec diagram</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARIA Spec diagrams using mermaid</title>
     <script src="./mermaid.min.js"></script>
-</head>
-<body>
-<div class="mermaid">
-graph TD
-alert --> alertdialog;
-article --> comment;
-cell --> columnheader;
-cell --> gridcell;
-cell --> rowheader;
-checkbox --> menuitemcheckbox;
-checkbox --> switch;
-command --> button;
-command --> link;
-command --> menuitem;
-composite --> grid;
-composite --> select;
-composite --> spinbutton;
-composite --> tablist;
-dialog --> alertdialog;
-document --> article;
-grid --> treegrid;
-grid --> treegrid;
-gridcell --> columnheader;
-gridcell --> columnheader;
-gridcell --> rowheader;
-gridcell --> rowheader;
-group --> row;
-group --> select;
-group --> toolbar;
-input --> checkbox;
-input --> combobox;
-input --> option;
-input --> radio;
-input --> slider;
-input --> spinbutton;
-input --> textbox;
-landmark --> banner;
-landmark --> complementary;
-landmark --> contentinfo;
-landmark --> form;
-landmark --> main;
-landmark --> navigation;
-landmark --> region;
-landmark --> search;
-list --> directory;
-list --> feed;
-listitem --> treeitem;
-menu --> menubar;
-menu --> menubar;
-menuitem --> menuitemcheckbox;
-menuitemcheckbox --> menuitemradio;
-menuitemcheckbox --> menuitemradio;
-option --> treeitem;
-radio --> menuitemradio;
-range --> meter;
-range --> progressbar;
-range --> scrollbar;
-range --> slider;
-range --> spinbutton;
-roletype --> structure;
-roletype --> widget;
-roletype --> window;
-section --> alert;
-section --> associationlist;
-section --> associationlistitemkey;
-section --> associationlistitemvalue;
-section --> blockquote;
-section --> caption;
-section --> cell;
-section --> code;
-section --> definition;
-section --> deletion;
-section --> emphasis;
-section --> figure;
-section --> group;
-section --> img;
-section --> insertion;
-section --> label;
-section --> landmark;
-section --> legend;
-section --> list;
-section --> listitem;
-section --> log;
-section --> mark;
-section --> marquee;
-section --> math;
-section --> note;
-section --> paragraph;
-section --> status;
-section --> strong;
-section --> subscript;
-section --> suggestion;
-section --> superscript;
-section --> table;
-section --> tabpanel;
-section --> term;
-section --> time;
-section --> tooltip;
-sectionhead --> columnheader;
-sectionhead --> heading;
-sectionhead --> rowheader;
-sectionhead --> tab;
-select --> listbox;
-select --> listbox;
-select --> menu;
-select --> menu;
-select --> radiogroup;
-select --> radiogroup;
-select --> tree;
-select --> tree;
-status --> timer;
-structure --> application;
-structure --> document;
-structure --> generic;
-structure --> presentation;
-structure --> range;
-structure --> rowgroup;
-structure --> section;
-structure --> sectionhead;
-structure --> separator;
-table --> grid;
-textbox --> searchbox;
-tree --> treegrid;
-tree --> treegrid;
-widget --> command;
-widget --> composite;
-widget --> gridcell;
-widget --> input;
-widget --> progressbar;
-widget --> row;
-widget --> scrollbar;
-widget --> separator;
-widget --> tab;
-window --> dialog;
-</div>
-</body>
+  </head>
+  <body>
+    <h1>ARIA role class diagram</h1>
+    <div class="mermaid">
+      graph TD alert --> alertdialog; article --> comment; cell -->
+      columnheader; cell --> gridcell; cell --> rowheader; checkbox -->
+      menuitemcheckbox; checkbox --> switch; command --> button; command -->
+      link; command --> menuitem; composite --> grid; composite --> select;
+      composite --> spinbutton; composite --> tablist; dialog --> alertdialog;
+      document --> article; grid --> treegrid; grid --> treegrid; gridcell -->
+      columnheader; gridcell --> columnheader; gridcell --> rowheader; gridcell
+      --> rowheader; group --> row; group --> select; group --> toolbar; input
+      --> checkbox; input --> combobox; input --> option; input --> radio; input
+      --> slider; input --> spinbutton; input --> textbox; landmark --> banner;
+      landmark --> complementary; landmark --> contentinfo; landmark --> form;
+      landmark --> main; landmark --> navigation; landmark --> region; landmark
+      --> search; list --> directory; list --> feed; listitem --> treeitem; menu
+      --> menubar; menu --> menubar; menuitem --> menuitemcheckbox;
+      menuitemcheckbox --> menuitemradio; menuitemcheckbox --> menuitemradio;
+      option --> treeitem; radio --> menuitemradio; range --> meter; range -->
+      progressbar; range --> scrollbar; range --> slider; range --> spinbutton;
+      roletype --> structure; roletype --> widget; roletype --> window; section
+      --> alert; section --> associationlist; section -->
+      associationlistitemkey; section --> associationlistitemvalue; section -->
+      blockquote; section --> caption; section --> cell; section --> code;
+      section --> definition; section --> deletion; section --> emphasis;
+      section --> figure; section --> group; section --> img; section -->
+      insertion; section --> label; section --> landmark; section --> legend;
+      section --> list; section --> listitem; section --> log; section --> mark;
+      section --> marquee; section --> math; section --> note; section -->
+      paragraph; section --> status; section --> strong; section --> subscript;
+      section --> suggestion; section --> superscript; section --> table;
+      section --> tabpanel; section --> term; section --> time; section -->
+      tooltip; sectionhead --> columnheader; sectionhead --> heading;
+      sectionhead --> rowheader; sectionhead --> tab; select --> listbox; select
+      --> listbox; select --> menu; select --> menu; select --> radiogroup;
+      select --> radiogroup; select --> tree; select --> tree; status --> timer;
+      structure --> application; structure --> document; structure --> generic;
+      structure --> presentation; structure --> range; structure --> rowgroup;
+      structure --> section; structure --> sectionhead; structure --> separator;
+      table --> grid; textbox --> searchbox; tree --> treegrid; tree -->
+      treegrid; widget --> command; widget --> composite; widget --> gridcell;
+      widget --> input; widget --> progressbar; widget --> row; widget -->
+      scrollbar; widget --> separator; widget --> tab; window --> dialog;
+    </div>
+  </body>
 </html>

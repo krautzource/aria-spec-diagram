@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARIA Spec diagram</title>
+    <title>ARIA Spec diagrams using D3</title>
     <style>
       .node circle {
         fill: #999;
@@ -35,7 +35,10 @@
   </head>
   <body>
     <h1>ARIA role class diagram</h1>
-    <p>Use the controls below to switch between tidy-tree and Dendogram layout of the D3 output.</p>
+    <p>
+      Use the controls below to switch between tidy-tree and Dendogram layout of
+      the D3 output.
+    </p>
     <form>
       <label
         ><input type="radio" name="mode" value="tree" checked /> Tree</label
@@ -353,7 +356,7 @@
         .append('text')
         .attr('dy', (d) => (d.children ? '-1em' : '0.3em'))
         // .attr('dx', d => d.children ? d.data.name.length*4+'px': 0)
-        .attr('x', (d) => (d.children ? d.data.name.length*2 : 8))
+        .attr('x', (d) => (d.children ? d.data.name.length * 2 : 8))
         .style('text-anchor', function (d) {
           return d.children ? 'end' : 'start';
         })
