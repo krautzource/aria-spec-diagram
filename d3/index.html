@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARIA Spec diagram</title>
+    <style>
+      .node circle {
+        fill: #999;
+      }
+
+      .node text {
+        font: 10px sans-serif;
+      }
+
+      .node--internal circle {
+        fill: #555;
+      }
+
+      .node--internal text {
+        text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+      }
+
+      .link {
+        fill: none;
+        stroke: #555;
+        stroke-opacity: 0.4;
+        stroke-width: 1.5px;
+      }
+
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ARIA role class diagram</h1>
+    <p>Use the controls below to switch between tidy-tree and Dendogram layout of the D3 output.</p>
+    <form>
+      <label
+        ><input type="radio" name="mode" value="tree" checked /> Tree</label
+      >
+      <label
+        ><input type="radio" name="mode" value="cluster" /> Dendrogram</label
+      >
+    </form>
+    <svg width="960" height="2400"></svg>
+    <script src="./d3.min.js"></script>
+    <script>
+      const data = {
+        name: 'roletype',
+        children: [
+          {
+            name: 'structure',
+            children: [
+              { name: 'application', children: [] },
+              {
+                name: 'document',
+                children: [
+                  {
+                    name: 'article',
+                    children: [{ name: 'comment', children: [] }],
+                  },
+                ],
+              },
+              { name: 'generic', children: [] },
+              { name: 'presentation', children: [] },
+              {
+                name: 'range',
+                children: [
+                  { name: 'meter', children: [] },
+                  { name: 'progressbar (*)', children: [] },
+                  { name: 'scrollbar (*)', children: [] },
+                  { name: 'slider (*)', children: [] },
+                  { name: 'spinbutton (*)', children: [] },
+                ],
+              },
+              { name: 'rowgroup', children: [] },
+              {
+                name: 'section',
+                children: [
+                  {
+                    name: 'alert',
+                    children: [{ name: 'alertdialog (*)', children: [] }],
+                  },
+                  { name: 'associationlist', children: [] },
+                  { name: 'associationlistitemkey', children: [] },
+                  { name: 'associationlistitemvalue', children: [] },
+                  { name: 'blockquote', children: [] },
+                  { name: 'caption', children: [] },
+                  {
+                    name: 'cell',
+                    children: [
+                      { name: 'columnheader (*)', children: [] },
+                      {
+                        name: 'gridcell (*)',
+                        children: [
+                          { name: 'columnheader (*)', children: [] },
+                          { name: 'rowheader (*)', children: [] },
+                        ],
+                      },
+                      { name: 'rowheader (*)', children: [] },
+                    ],
+                  },
+                  { name: 'code', children: [] },
+                  { name: 'definition', children: [] },
+                  { name: 'deletion', children: [] },
+                  { name: 'emphasis', children: [] },
+                  { name: 'figure', children: [] },
+                  {
+                    name: 'group',
+                    children: [
+                      { name: 'row (*)', children: [] },
+                      {
+                        name: 'select (*)',
+                        children: [
+                          { name: 'listbox', children: [] },
+                          {
+                            name: 'menu',
+                            children: [{ name: 'menubar', children: [] }],
+                          },
+                          { name: 'radiogroup', children: [] },
+                          {
+                            name: 'tree',
+                            children: [{ name: 'treegrid (*)', children: [] }],
+                          },
+                        ],
+                      },
+                      { name: 'toolbar', children: [] },
+                    ],
+                  },
+                  { name: 'img', children: [] },
+                  { name: 'insertion', children: [] },
+                  { name: 'label', children: [] },
+                  {
+                    name: 'landmark',
+                    children: [
+                      { name: 'banner', children: [] },
+                      { name: 'complementary', children: [] },
+                      { name: 'contentinfo', children: [] },
+                      { name: 'form', children: [] },
+                      { name: 'main', children: [] },
+                      { name: 'navigation', children: [] },
+                      { name: 'region', children: [] },
+                      { name: 'search', children: [] },
+                    ],
+                  },
+                  { name: 'legend', children: [] },
+                  {
+                    name: 'list',
+                    children: [
+                      { name: 'directory', children: [] },
+                      { name: 'feed', children: [] },
+                    ],
+                  },
+                  {
+                    name: 'listitem',
+                    children: [{ name: 'treeitem (*)', children: [] }],
+                  },
+                  { name: 'log', children: [] },
+                  { name: 'mark', children: [] },
+                  { name: 'marquee', children: [] },
+                  { name: 'math', children: [] },
+                  { name: 'note', children: [] },
+                  { name: 'paragraph', children: [] },
+                  {
+                    name: 'status',
+                    children: [{ name: 'timer', children: [] }],
+                  },
+                  { name: 'strong', children: [] },
+                  { name: 'subscript', children: [] },
+                  { name: 'suggestion', children: [] },
+                  { name: 'superscript', children: [] },
+                  {
+                    name: 'table',
+                    children: [
+                      {
+                        name: 'grid (*)',
+                        children: [{ name: 'treegrid (*)', children: [] }],
+                      },
+                    ],
+                  },
+                  { name: 'tabpanel', children: [] },
+                  { name: 'term', children: [] },
+                  { name: 'time', children: [] },
+                  { name: 'tooltip', children: [] },
+                ],
+              },
+              {
+                name: 'sectionhead',
+                children: [
+                  { name: 'columnheader (*)', children: [] },
+                  { name: 'heading', children: [] },
+                  { name: 'rowheader (*)', children: [] },
+                  { name: 'tab (*)', children: [] },
+                ],
+              },
+              { name: 'separator (*)', children: [] },
+            ],
+          },
+          {
+            name: 'widget',
+            children: [
+              {
+                name: 'command',
+                children: [
+                  { name: 'button', children: [] },
+                  { name: 'link', children: [] },
+                  {
+                    name: 'menuitem',
+                    children: [
+                      {
+                        name: 'menuitemcheckbox (*)',
+                        children: [{ name: 'menuitemradio (*)', children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: 'composite',
+                children: [
+                  {
+                    name: 'grid (*)',
+                    children: [{ name: 'treegrid (*)', children: [] }],
+                  },
+                  {
+                    name: 'select (*)',
+                    children: [
+                      { name: 'listbox', children: [] },
+                      {
+                        name: 'menu',
+                        children: [{ name: 'menubar', children: [] }],
+                      },
+                      { name: 'radiogroup', children: [] },
+                      {
+                        name: 'tree',
+                        children: [{ name: 'treegrid (*)', children: [] }],
+                      },
+                    ],
+                  },
+                  { name: 'spinbutton (*)', children: [] },
+                  { name: 'tablist', children: [] },
+                ],
+              },
+              {
+                name: 'gridcell (*)',
+                children: [
+                  { name: 'columnheader (*)', children: [] },
+                  { name: 'rowheader (*)', children: [] },
+                ],
+              },
+              {
+                name: 'input',
+                children: [
+                  {
+                    name: 'checkbox',
+                    children: [
+                      {
+                        name: 'menuitemcheckbox (*)',
+                        children: [{ name: 'menuitemradio (*)', children: [] }],
+                      },
+                      { name: 'switch', children: [] },
+                    ],
+                  },
+                  { name: 'combobox', children: [] },
+                  {
+                    name: 'option',
+                    children: [{ name: 'treeitem (*)', children: [] }],
+                  },
+                  {
+                    name: 'radio',
+                    children: [{ name: 'menuitemradio (*)', children: [] }],
+                  },
+                  { name: 'slider (*)', children: [] },
+                  { name: 'spinbutton (*)', children: [] },
+                  {
+                    name: 'textbox',
+                    children: [{ name: 'searchbox', children: [] }],
+                  },
+                ],
+              },
+              { name: 'progressbar (*)', children: [] },
+              { name: 'row (*)', children: [] },
+              { name: 'scrollbar (*)', children: [] },
+              { name: 'separator (*)', children: [] },
+              { name: 'tab (*)', children: [] },
+            ],
+          },
+          {
+            name: 'window',
+            children: [
+              {
+                name: 'dialog',
+                children: [{ name: 'alertdialog (*)', children: [] }],
+              },
+            ],
+          },
+        ],
+      };
+
+      // The following code is based on https://bl.ocks.org/mbostock/e9ba78a2c1070980d1b530800ce7fa2b
+      // Released under the GNU General Public License, version 3, https://opensource.org/licenses/GPL-3.0
+      // Copyright (c) 2020, M. Bostock
+      // Modifications Copyright (c) 2020 P. Krautzberger
+
+      var svg = d3.select('svg'),
+        width = +svg.attr('width'),
+        height = +svg.attr('height'),
+        g = svg.append('g').attr('transform', 'translate(40,0)');
+
+      var tree = d3.tree().size([height - 400, width - 160]);
+
+      var cluster = d3.cluster().size([height, width - 160]);
+
+      var stratify = d3.stratify().parentId(function (d) {
+        return d.id.substring(0, d.id.lastIndexOf('.'));
+      });
+
+      const root = d3
+        .hierarchy(data)
+        .sort(
+          (a, b) =>
+            d3.descending(a.height, b.height) ||
+            d3.ascending(a.data.name, b.data.name)
+        );
+
+      //   cluster(root);
+      tree(root);
+
+      var link = g
+        .selectAll('.link')
+        .data(root.descendants().slice(1))
+        .enter()
+        .append('path')
+        .attr('class', 'link')
+        .attr('d', diagonal);
+
+      var node = g
+        .selectAll('.node')
+        .data(root.descendants())
+        .enter()
+        .append('g')
+        .attr(
+          'class',
+          (d) => 'node' + (d.children ? ' node--internal' : ' node--leaf')
+        )
+        .attr('transform', (d) => 'translate(' + d.y + ',' + d.x + ')');
+
+      node.append('circle').attr('r', 2.5);
+
+      node
+        .append('text')
+        .attr('dy', (d) => (d.children ? '-1em' : '0.3em'))
+        // .attr('dx', d => d.children ? d.data.name.length*4+'px': 0)
+        .attr('x', (d) => (d.children ? d.data.name.length*2 : 8))
+        .style('text-anchor', function (d) {
+          return d.children ? 'end' : 'start';
+        })
+        .text((d) => d.data.name);
+
+      function diagonal(d) {
+        return (
+          'M' +
+          d.y +
+          ',' +
+          d.x +
+          'C' +
+          (d.parent.y + 100) +
+          ',' +
+          d.x +
+          ' ' +
+          (d.parent.y + 100) +
+          ',' +
+          d.parent.x +
+          ' ' +
+          d.parent.y +
+          ',' +
+          d.parent.x
+        );
+      }
+
+      d3.selectAll('input').on('change', changed);
+
+      var timeout = setTimeout(function () {
+        d3.select('input[value="tree"]')
+          .property('checked', true)
+          .dispatch('change');
+      }, 1000);
+
+      function changed() {
+        timeout = clearTimeout(timeout);
+        (this.value === 'tree' ? tree : cluster)(root);
+        var t = d3.transition().duration(750);
+        node.transition(t).attr('transform', function (d) {
+          return 'translate(' + d.y + ',' + d.x + ')';
+        });
+        link.transition(t).attr('d', diagonal);
+      }
+    </script>
+  </body>
+</html>
