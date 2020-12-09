@@ -31,6 +31,13 @@
       label {
         display: block;
       }
+
+      .is-activedescendant circle {
+        fill: pink;
+      }
+      .is-activedescendant text {
+        text-shadow: 0 1px 0 pink, 0 -1px 0 pink, 1px 0 0 pink, -1px 0 0 pink;
+      }
     </style>
   </head>
   <body>
@@ -47,252 +54,19 @@
         ><input type="radio" name="mode" value="cluster" /> Dendrogram</label
       >
     </form>
-    <svg width="960" height="2400"></svg>
+    <svg
+      tabindex="0"
+      role="tree"
+      aria-label="ARIA Spec class diagram"
+      aria-description="Focus to navigate with arrow keys."
+      width="960"
+      height="2400"
+    ></svg>
+    <script src="./treewalker.js"></script>
     <script src="./d3.min.js"></script>
     <script>
-      const data = {
-        name: 'roletype',
-        children: [
-          {
-            name: 'structure',
-            children: [
-              { name: 'application', children: [] },
-              {
-                name: 'document',
-                children: [
-                  {
-                    name: 'article',
-                    children: [{ name: 'comment', children: [] }],
-                  },
-                ],
-              },
-              { name: 'generic', children: [] },
-              { name: 'presentation', children: [] },
-              {
-                name: 'range',
-                children: [
-                  { name: 'meter', children: [] },
-                  { name: 'progressbar (*)', children: [] },
-                  { name: 'scrollbar (*)', children: [] },
-                  { name: 'slider (*)', children: [] },
-                  { name: 'spinbutton (*)', children: [] },
-                ],
-              },
-              { name: 'rowgroup', children: [] },
-              {
-                name: 'section',
-                children: [
-                  {
-                    name: 'alert',
-                    children: [{ name: 'alertdialog (*)', children: [] }],
-                  },
-                  { name: 'associationlist', children: [] },
-                  { name: 'associationlistitemkey', children: [] },
-                  { name: 'associationlistitemvalue', children: [] },
-                  { name: 'blockquote', children: [] },
-                  { name: 'caption', children: [] },
-                  {
-                    name: 'cell',
-                    children: [
-                      { name: 'columnheader (*)', children: [] },
-                      {
-                        name: 'gridcell (*)',
-                        children: [
-                          { name: 'columnheader (*)', children: [] },
-                          { name: 'rowheader (*)', children: [] },
-                        ],
-                      },
-                      { name: 'rowheader (*)', children: [] },
-                    ],
-                  },
-                  { name: 'code', children: [] },
-                  { name: 'definition', children: [] },
-                  { name: 'deletion', children: [] },
-                  { name: 'emphasis', children: [] },
-                  { name: 'figure', children: [] },
-                  {
-                    name: 'group',
-                    children: [
-                      { name: 'row (*)', children: [] },
-                      {
-                        name: 'select (*)',
-                        children: [
-                          { name: 'listbox', children: [] },
-                          {
-                            name: 'menu',
-                            children: [{ name: 'menubar', children: [] }],
-                          },
-                          { name: 'radiogroup', children: [] },
-                          {
-                            name: 'tree',
-                            children: [{ name: 'treegrid (*)', children: [] }],
-                          },
-                        ],
-                      },
-                      { name: 'toolbar', children: [] },
-                    ],
-                  },
-                  { name: 'img', children: [] },
-                  { name: 'insertion', children: [] },
-                  { name: 'label', children: [] },
-                  {
-                    name: 'landmark',
-                    children: [
-                      { name: 'banner', children: [] },
-                      { name: 'complementary', children: [] },
-                      { name: 'contentinfo', children: [] },
-                      { name: 'form', children: [] },
-                      { name: 'main', children: [] },
-                      { name: 'navigation', children: [] },
-                      { name: 'region', children: [] },
-                      { name: 'search', children: [] },
-                    ],
-                  },
-                  { name: 'legend', children: [] },
-                  {
-                    name: 'list',
-                    children: [
-                      { name: 'directory', children: [] },
-                      { name: 'feed', children: [] },
-                    ],
-                  },
-                  {
-                    name: 'listitem',
-                    children: [{ name: 'treeitem (*)', children: [] }],
-                  },
-                  { name: 'log', children: [] },
-                  { name: 'mark', children: [] },
-                  { name: 'marquee', children: [] },
-                  { name: 'math', children: [] },
-                  { name: 'note', children: [] },
-                  { name: 'paragraph', children: [] },
-                  {
-                    name: 'status',
-                    children: [{ name: 'timer', children: [] }],
-                  },
-                  { name: 'strong', children: [] },
-                  { name: 'subscript', children: [] },
-                  { name: 'suggestion', children: [] },
-                  { name: 'superscript', children: [] },
-                  {
-                    name: 'table',
-                    children: [
-                      {
-                        name: 'grid (*)',
-                        children: [{ name: 'treegrid (*)', children: [] }],
-                      },
-                    ],
-                  },
-                  { name: 'tabpanel', children: [] },
-                  { name: 'term', children: [] },
-                  { name: 'time', children: [] },
-                  { name: 'tooltip', children: [] },
-                ],
-              },
-              {
-                name: 'sectionhead',
-                children: [
-                  { name: 'columnheader (*)', children: [] },
-                  { name: 'heading', children: [] },
-                  { name: 'rowheader (*)', children: [] },
-                  { name: 'tab (*)', children: [] },
-                ],
-              },
-              { name: 'separator (*)', children: [] },
-            ],
-          },
-          {
-            name: 'widget',
-            children: [
-              {
-                name: 'command',
-                children: [
-                  { name: 'button', children: [] },
-                  { name: 'link', children: [] },
-                  {
-                    name: 'menuitem',
-                    children: [
-                      {
-                        name: 'menuitemcheckbox',
-                        children: [{ name: 'menuitemradio', children: [] }],
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                name: 'composite',
-                children: [
-                  {
-                    name: 'grid (*)',
-                    children: [{ name: 'treegrid (*)', children: [] }],
-                  },
-                  {
-                    name: 'select (*)',
-                    children: [
-                      { name: 'listbox', children: [] },
-                      {
-                        name: 'menu',
-                        children: [{ name: 'menubar', children: [] }],
-                      },
-                      { name: 'radiogroup', children: [] },
-                      {
-                        name: 'tree',
-                        children: [{ name: 'treegrid (*)', children: [] }],
-                      },
-                    ],
-                  },
-                  { name: 'spinbutton (*)', children: [] },
-                  { name: 'tablist', children: [] },
-                ],
-              },
-              {
-                name: 'gridcell (*)',
-                children: [
-                  { name: 'columnheader (*)', children: [] },
-                  { name: 'rowheader (*)', children: [] },
-                ],
-              },
-              {
-                name: 'input',
-                children: [
-                  {
-                    name: 'checkbox',
-                    children: [{ name: 'switch', children: [] }],
-                  },
-                  { name: 'combobox', children: [] },
-                  {
-                    name: 'option',
-                    children: [{ name: 'treeitem (*)', children: [] }],
-                  },
-                  { name: 'radio', children: [] },
-                  { name: 'slider (*)', children: [] },
-                  { name: 'spinbutton (*)', children: [] },
-                  {
-                    name: 'textbox',
-                    children: [{ name: 'searchbox', children: [] }],
-                  },
-                ],
-              },
-              { name: 'progressbar (*)', children: [] },
-              { name: 'row (*)', children: [] },
-              { name: 'scrollbar (*)', children: [] },
-              { name: 'separator (*)', children: [] },
-              { name: 'tab (*)', children: [] },
-            ],
-          },
-          {
-            name: 'window',
-            children: [
-              {
-                name: 'dialog',
-                children: [{ name: 'alertdialog (*)', children: [] }],
-              },
-            ],
-          },
-        ],
-      };
-
+      const data =
+      {"name":"roletype","id":"roletype","children":[{"name":"structure","id":"roletypestructure","children":[{"name":"application","id":"roletypestructureapplication","children":[],"level":3,"position":0,"setsize":9,"posinset":1},{"name":"document","id":"roletypestructuredocument","children":[{"name":"article","id":"roletypestructuredocumentarticle","children":[{"name":"comment","id":"roletypestructuredocumentarticlecomment","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":1,"posinset":1}],"level":3,"position":0,"setsize":9,"posinset":2},{"name":"generic","id":"roletypestructuregeneric","children":[],"level":3,"position":0,"setsize":9,"posinset":3},{"name":"presentation","id":"roletypestructurepresentation","children":[],"level":3,"position":0,"setsize":9,"posinset":4},{"name":"range","id":"roletypestructurerange","children":[{"name":"meter","id":"roletypestructurerangemeter","children":[],"level":4,"position":0,"setsize":5,"posinset":1},{"name":"progressbar (*)","id":"roletypestructurerangeprogressbar","children":[],"level":4,"position":0,"setsize":5,"posinset":2},{"name":"scrollbar (*)","id":"roletypestructurerangescrollbar","children":[],"level":4,"position":0,"setsize":5,"posinset":3},{"name":"slider (*)","id":"roletypestructurerangeslider","children":[],"level":4,"position":0,"setsize":5,"posinset":4},{"name":"spinbutton (*)","id":"roletypestructurerangespinbutton","children":[],"level":4,"position":0,"setsize":5,"posinset":5}],"level":3,"position":0,"setsize":9,"posinset":5},{"name":"rowgroup","id":"roletypestructurerowgroup","children":[],"level":3,"position":0,"setsize":9,"posinset":6},{"name":"section","id":"roletypestructuresection","children":[{"name":"alert","id":"roletypestructuresectionalert","children":[{"name":"alertdialog (*)","id":"roletypestructuresectionalertalertdialog","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":36,"posinset":1},{"name":"associationlist","id":"roletypestructuresectionassociationlist","children":[],"level":4,"position":0,"setsize":36,"posinset":2},{"name":"associationlistitemkey","id":"roletypestructuresectionassociationlistitemkey","children":[],"level":4,"position":0,"setsize":36,"posinset":3},{"name":"associationlistitemvalue","id":"roletypestructuresectionassociationlistitemvalue","children":[],"level":4,"position":0,"setsize":36,"posinset":4},{"name":"blockquote","id":"roletypestructuresectionblockquote","children":[],"level":4,"position":0,"setsize":36,"posinset":5},{"name":"caption","id":"roletypestructuresectioncaption","children":[],"level":4,"position":0,"setsize":36,"posinset":6},{"name":"cell","id":"roletypestructuresectioncell","children":[{"name":"columnheader (*)","id":"roletypestructuresectioncellcolumnheader","children":[],"level":5,"position":0,"setsize":3,"posinset":1},{"name":"gridcell (*)","id":"roletypestructuresectioncellgridcell","children":[{"name":"columnheader (*)","id":"roletypestructuresectioncellgridcellcolumnheader","children":[],"level":6,"position":0,"setsize":2,"posinset":1},{"name":"rowheader (*)","id":"roletypestructuresectioncellgridcellrowheader","children":[],"level":6,"position":0,"setsize":2,"posinset":2}],"level":5,"position":0,"setsize":3,"posinset":2},{"name":"rowheader (*)","id":"roletypestructuresectioncellrowheader","children":[],"level":5,"position":0,"setsize":3,"posinset":3}],"level":4,"position":0,"setsize":36,"posinset":7},{"name":"code","id":"roletypestructuresectioncode","children":[],"level":4,"position":0,"setsize":36,"posinset":8},{"name":"definition","id":"roletypestructuresectiondefinition","children":[],"level":4,"position":0,"setsize":36,"posinset":9},{"name":"deletion","id":"roletypestructuresectiondeletion","children":[],"level":4,"position":0,"setsize":36,"posinset":10},{"name":"emphasis","id":"roletypestructuresectionemphasis","children":[],"level":4,"position":0,"setsize":36,"posinset":11},{"name":"figure","id":"roletypestructuresectionfigure","children":[],"level":4,"position":0,"setsize":36,"posinset":12},{"name":"group","id":"roletypestructuresectiongroup","children":[{"name":"row (*)","id":"roletypestructuresectiongrouprow","children":[],"level":5,"position":0,"setsize":3,"posinset":1},{"name":"select (*)","id":"roletypestructuresectiongroupselect","children":[{"name":"listbox","id":"roletypestructuresectiongroupselectlistbox","children":[],"level":6,"position":0,"setsize":4,"posinset":1},{"name":"menu","id":"roletypestructuresectiongroupselectmenu","children":[{"name":"menubar","id":"roletypestructuresectiongroupselectmenumenubar","children":[],"level":7,"position":0,"setsize":1,"posinset":1}],"level":6,"position":0,"setsize":4,"posinset":2},{"name":"radiogroup","id":"roletypestructuresectiongroupselectradiogroup","children":[],"level":6,"position":0,"setsize":4,"posinset":3},{"name":"tree","id":"roletypestructuresectiongroupselecttree","children":[{"name":"treegrid (*)","id":"roletypestructuresectiongroupselecttreetreegrid","children":[],"level":7,"position":0,"setsize":1,"posinset":1}],"level":6,"position":0,"setsize":4,"posinset":4}],"level":5,"position":0,"setsize":3,"posinset":2},{"name":"toolbar","id":"roletypestructuresectiongrouptoolbar","children":[],"level":5,"position":0,"setsize":3,"posinset":3}],"level":4,"position":0,"setsize":36,"posinset":13},{"name":"img","id":"roletypestructuresectionimg","children":[],"level":4,"position":0,"setsize":36,"posinset":14},{"name":"insertion","id":"roletypestructuresectioninsertion","children":[],"level":4,"position":0,"setsize":36,"posinset":15},{"name":"label","id":"roletypestructuresectionlabel","children":[],"level":4,"position":0,"setsize":36,"posinset":16},{"name":"landmark","id":"roletypestructuresectionlandmark","children":[{"name":"banner","id":"roletypestructuresectionlandmarkbanner","children":[],"level":5,"position":0,"setsize":8,"posinset":1},{"name":"complementary","id":"roletypestructuresectionlandmarkcomplementary","children":[],"level":5,"position":0,"setsize":8,"posinset":2},{"name":"contentinfo","id":"roletypestructuresectionlandmarkcontentinfo","children":[],"level":5,"position":0,"setsize":8,"posinset":3},{"name":"form","id":"roletypestructuresectionlandmarkform","children":[],"level":5,"position":0,"setsize":8,"posinset":4},{"name":"main","id":"roletypestructuresectionlandmarkmain","children":[],"level":5,"position":0,"setsize":8,"posinset":5},{"name":"navigation","id":"roletypestructuresectionlandmarknavigation","children":[],"level":5,"position":0,"setsize":8,"posinset":6},{"name":"region","id":"roletypestructuresectionlandmarkregion","children":[],"level":5,"position":0,"setsize":8,"posinset":7},{"name":"search","id":"roletypestructuresectionlandmarksearch","children":[],"level":5,"position":0,"setsize":8,"posinset":8}],"level":4,"position":0,"setsize":36,"posinset":17},{"name":"legend","id":"roletypestructuresectionlegend","children":[],"level":4,"position":0,"setsize":36,"posinset":18},{"name":"list","id":"roletypestructuresectionlist","children":[{"name":"directory","id":"roletypestructuresectionlistdirectory","children":[],"level":5,"position":0,"setsize":2,"posinset":1},{"name":"feed","id":"roletypestructuresectionlistfeed","children":[],"level":5,"position":0,"setsize":2,"posinset":2}],"level":4,"position":0,"setsize":36,"posinset":19},{"name":"listitem","id":"roletypestructuresectionlistitem","children":[{"name":"treeitem (*)","id":"roletypestructuresectionlistitemtreeitem","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":36,"posinset":20},{"name":"log","id":"roletypestructuresectionlog","children":[],"level":4,"position":0,"setsize":36,"posinset":21},{"name":"mark","id":"roletypestructuresectionmark","children":[],"level":4,"position":0,"setsize":36,"posinset":22},{"name":"marquee","id":"roletypestructuresectionmarquee","children":[],"level":4,"position":0,"setsize":36,"posinset":23},{"name":"math","id":"roletypestructuresectionmath","children":[],"level":4,"position":0,"setsize":36,"posinset":24},{"name":"note","id":"roletypestructuresectionnote","children":[],"level":4,"position":0,"setsize":36,"posinset":25},{"name":"paragraph","id":"roletypestructuresectionparagraph","children":[],"level":4,"position":0,"setsize":36,"posinset":26},{"name":"status","id":"roletypestructuresectionstatus","children":[{"name":"timer","id":"roletypestructuresectionstatustimer","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":36,"posinset":27},{"name":"strong","id":"roletypestructuresectionstrong","children":[],"level":4,"position":0,"setsize":36,"posinset":28},{"name":"subscript","id":"roletypestructuresectionsubscript","children":[],"level":4,"position":0,"setsize":36,"posinset":29},{"name":"suggestion","id":"roletypestructuresectionsuggestion","children":[],"level":4,"position":0,"setsize":36,"posinset":30},{"name":"superscript","id":"roletypestructuresectionsuperscript","children":[],"level":4,"position":0,"setsize":36,"posinset":31},{"name":"table","id":"roletypestructuresectiontable","children":[{"name":"grid (*)","id":"roletypestructuresectiontablegrid","children":[{"name":"treegrid (*)","id":"roletypestructuresectiontablegridtreegrid","children":[],"level":6,"position":0,"setsize":1,"posinset":1}],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":36,"posinset":32},{"name":"tabpanel","id":"roletypestructuresectiontabpanel","children":[],"level":4,"position":0,"setsize":36,"posinset":33},{"name":"term","id":"roletypestructuresectionterm","children":[],"level":4,"position":0,"setsize":36,"posinset":34},{"name":"time","id":"roletypestructuresectiontime","children":[],"level":4,"position":0,"setsize":36,"posinset":35},{"name":"tooltip","id":"roletypestructuresectiontooltip","children":[],"level":4,"position":0,"setsize":36,"posinset":36}],"level":3,"position":0,"setsize":9,"posinset":7},{"name":"sectionhead","id":"roletypestructuresectionhead","children":[{"name":"columnheader (*)","id":"roletypestructuresectionheadcolumnheader","children":[],"level":4,"position":0,"setsize":4,"posinset":1},{"name":"heading","id":"roletypestructuresectionheadheading","children":[],"level":4,"position":0,"setsize":4,"posinset":2},{"name":"rowheader (*)","id":"roletypestructuresectionheadrowheader","children":[],"level":4,"position":0,"setsize":4,"posinset":3},{"name":"tab (*)","id":"roletypestructuresectionheadtab","children":[],"level":4,"position":0,"setsize":4,"posinset":4}],"level":3,"position":0,"setsize":9,"posinset":8},{"name":"separator (*)","id":"roletypestructureseparator","children":[],"level":3,"position":0,"setsize":9,"posinset":9}],"level":2,"position":0,"setsize":3,"posinset":1},{"name":"widget","id":"roletypewidget","children":[{"name":"command","id":"roletypewidgetcommand","children":[{"name":"button","id":"roletypewidgetcommandbutton","children":[],"level":4,"position":0,"setsize":3,"posinset":1},{"name":"link","id":"roletypewidgetcommandlink","children":[],"level":4,"position":0,"setsize":3,"posinset":2},{"name":"menuitem","id":"roletypewidgetcommandmenuitem","children":[{"name":"menuitemcheckbox","id":"roletypewidgetcommandmenuitemmenuitemcheckbox","children":[{"name":"menuitemradio","id":"roletypewidgetcommandmenuitemmenuitemcheckboxmenuitemradio","children":[],"level":6,"position":0,"setsize":1,"posinset":1}],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":3,"posinset":3}],"level":3,"position":0,"setsize":9,"posinset":1},{"name":"composite","id":"roletypewidgetcomposite","children":[{"name":"grid (*)","id":"roletypewidgetcompositegrid","children":[{"name":"treegrid (*)","id":"roletypewidgetcompositegridtreegrid","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":4,"posinset":1},{"name":"select (*)","id":"roletypewidgetcompositeselect","children":[{"name":"listbox","id":"roletypewidgetcompositeselectlistbox","children":[],"level":5,"position":0,"setsize":4,"posinset":1},{"name":"menu","id":"roletypewidgetcompositeselectmenu","children":[{"name":"menubar","id":"roletypewidgetcompositeselectmenumenubar","children":[],"level":6,"position":0,"setsize":1,"posinset":1}],"level":5,"position":0,"setsize":4,"posinset":2},{"name":"radiogroup","id":"roletypewidgetcompositeselectradiogroup","children":[],"level":5,"position":0,"setsize":4,"posinset":3},{"name":"tree","id":"roletypewidgetcompositeselecttree","children":[{"name":"treegrid (*)","id":"roletypewidgetcompositeselecttreetreegrid","children":[],"level":6,"position":0,"setsize":1,"posinset":1}],"level":5,"position":0,"setsize":4,"posinset":4}],"level":4,"position":0,"setsize":4,"posinset":2},{"name":"spinbutton (*)","id":"roletypewidgetcompositespinbutton","children":[],"level":4,"position":0,"setsize":4,"posinset":3},{"name":"tablist","id":"roletypewidgetcompositetablist","children":[],"level":4,"position":0,"setsize":4,"posinset":4}],"level":3,"position":0,"setsize":9,"posinset":2},{"name":"gridcell (*)","id":"roletypewidgetgridcell","children":[{"name":"columnheader (*)","id":"roletypewidgetgridcellcolumnheader","children":[],"level":4,"position":0,"setsize":2,"posinset":1},{"name":"rowheader (*)","id":"roletypewidgetgridcellrowheader","children":[],"level":4,"position":0,"setsize":2,"posinset":2}],"level":3,"position":0,"setsize":9,"posinset":3},{"name":"input","id":"roletypewidgetinput","children":[{"name":"checkbox","id":"roletypewidgetinputcheckbox","children":[{"name":"switch","id":"roletypewidgetinputcheckboxswitch","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":7,"posinset":1},{"name":"combobox","id":"roletypewidgetinputcombobox","children":[],"level":4,"position":0,"setsize":7,"posinset":2},{"name":"option","id":"roletypewidgetinputoption","children":[{"name":"treeitem (*)","id":"roletypewidgetinputoptiontreeitem","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":7,"posinset":3},{"name":"radio","id":"roletypewidgetinputradio","children":[],"level":4,"position":0,"setsize":7,"posinset":4},{"name":"slider (*)","id":"roletypewidgetinputslider","children":[],"level":4,"position":0,"setsize":7,"posinset":5},{"name":"spinbutton (*)","id":"roletypewidgetinputspinbutton","children":[],"level":4,"position":0,"setsize":7,"posinset":6},{"name":"textbox","id":"roletypewidgetinputtextbox","children":[{"name":"searchbox","id":"roletypewidgetinputtextboxsearchbox","children":[],"level":5,"position":0,"setsize":1,"posinset":1}],"level":4,"position":0,"setsize":7,"posinset":7}],"level":3,"position":0,"setsize":9,"posinset":4},{"name":"progressbar (*)","id":"roletypewidgetprogressbar","children":[],"level":3,"position":0,"setsize":9,"posinset":5},{"name":"row (*)","id":"roletypewidgetrow","children":[],"level":3,"position":0,"setsize":9,"posinset":6},{"name":"scrollbar (*)","id":"roletypewidgetscrollbar","children":[],"level":3,"position":0,"setsize":9,"posinset":7},{"name":"separator (*)","id":"roletypewidgetseparator","children":[],"level":3,"position":0,"setsize":9,"posinset":8},{"name":"tab (*)","id":"roletypewidgettab","children":[],"level":3,"position":0,"setsize":9,"posinset":9}],"level":2,"position":0,"setsize":3,"posinset":2},{"name":"window","id":"roletypewindow","children":[{"name":"dialog","id":"roletypewindowdialog","children":[{"name":"alertdialog (*)","id":"roletypewindowdialogalertdialog","children":[],"level":4,"position":0,"setsize":1,"posinset":1}],"level":3,"position":0,"setsize":1,"posinset":1}],"level":2,"position":0,"setsize":3,"posinset":3}],"level":1,"position":0,"setsize":1}
       // The following code is based on https://bl.ocks.org/mbostock/e9ba78a2c1070980d1b530800ce7fa2b
       // Released under the GNU General Public License, version 3, https://opensource.org/licenses/GPL-3.0
       // Copyright (c) 2020, M. Bostock
@@ -339,6 +113,15 @@
           'class',
           (d) => 'node' + (d.children ? ' node--internal' : ' node--leaf')
         )
+        .attr('id', (d) => d.data.id)
+        .attr('role', 'treeitem')
+        .attr('aria-label', (d) => d.data.name)
+        .attr('aria-posinset', (d) => d.data.posinset)
+        .attr('aria-setsize', (d) => d.data.setsize)
+        .attr('aria-level', (d) => d.data.level)
+        .attr('aria-owns', (d) =>
+          d.children ? d.children.map((child) => child.data.id).join(' ') : ''
+        )
         .attr('transform', (d) => 'translate(' + d.y + ',' + d.x + ')');
 
       node.append('circle').attr('r', 2.5);
@@ -373,6 +156,10 @@
           d.parent.x
         );
       }
+      addTreewalker(
+        document.querySelector('svg'),
+        document.querySelector('svg [aria-owns]')
+      );
 
       d3.selectAll('input').on('change', changed);
 
