@@ -213,8 +213,8 @@
                     name: 'menuitem',
                     children: [
                       {
-                        name: 'menuitemcheckbox (*)',
-                        children: [{ name: 'menuitemradio (*)', children: [] }],
+                        name: 'menuitemcheckbox',
+                        children: [{ name: 'menuitemradio', children: [] }],
                       },
                     ],
                   },
@@ -258,23 +258,14 @@
                 children: [
                   {
                     name: 'checkbox',
-                    children: [
-                      {
-                        name: 'menuitemcheckbox (*)',
-                        children: [{ name: 'menuitemradio (*)', children: [] }],
-                      },
-                      { name: 'switch', children: [] },
-                    ],
+                    children: [{ name: 'switch', children: [] }],
                   },
                   { name: 'combobox', children: [] },
                   {
                     name: 'option',
                     children: [{ name: 'treeitem (*)', children: [] }],
                   },
-                  {
-                    name: 'radio',
-                    children: [{ name: 'menuitemradio (*)', children: [] }],
-                  },
+                  { name: 'radio', children: [] },
                   { name: 'slider (*)', children: [] },
                   { name: 'spinbutton (*)', children: [] },
                   {
